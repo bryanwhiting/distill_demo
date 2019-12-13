@@ -1,5 +1,5 @@
 ---
-title: "My Distill Website"
+title: "An example of what you can do with Distill"
 description: |
   Welcome to the website. I hope you enjoy it!
 site: distill::distill_website
@@ -13,3 +13,102 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
+The instructions for setting this up are found here: https://github.com/bryanwhiting/distill_demo#distill_demo
+
+## Plots
+I'm able to do some cool stuff:
+
+```{r, layout="l-screen-inset"}
+library(plotly)
+library(crosstalk)
+
+library(leaflet)
+
+eqs <- highlight_key(quakes)
+stations <- filter_slider(
+  "station", "Number of Stations", 
+  eqs, ~stations
+)
+
+p <- plot_ly(eqs, x = ~depth, y = ~mag) %>% 
+  add_markers(alpha = 0.5) %>% 
+  highlight("plotly_selected")
+
+map <- leaflet(eqs) %>% 
+  addTiles() %>% 
+  addCircles()
+
+bscols(
+  widths = c(6, 6, 3), 
+  p, map, stations
+)
+```
+
+```{r}
+#demo("crosstalk-highlight-binned-target-a", package = "plotly", ask=F, echo=T)
+
+
+library(plotly)
+
+d <- highlight_key(mpg)
+
+dots <- plot_ly(d, colors = "Set1", color = ~class, x = ~displ, y = ~cyl) %>%
+   layout(
+     xaxis = list(title = "Engine displacement"),
+     yaxis = list(title = "Number of cylinders")
+   )
+
+boxs <- plot_ly(d, colors = "Set1", color = ~class, x = ~class, y = ~cty) %>% 
+   add_boxplot() %>%
+   layout(
+     xaxis = list(title = ""),
+     yaxis = list(title = "Miles per gallon (city)")
+   )
+
+bars <- plot_ly(d, colors = "Set1", x = ~class, color = ~class)
+
+subplot(dots, boxs, titleX = TRUE, titleY = TRUE) %>%
+   subplot(bars, nrows = 2, titleX = TRUE, titleY = TRUE) %>%
+   layout(
+     title = "Dynamic 2-way ANOVA (click & drag on scatterplot)",
+     barmode = "overlay",
+     showlegend = FALSE
+   ) %>%
+   highlight("plotly_selected", opacityDim = 0.6)
+```
+
+## Tables
+### Paged Table
+Making a table: 
+```{r, layout="l-body-outset"}
+library(rmarkdown)
+paged_table(mtcars, options = list(rows.print = 15))
+```
+### Data table
+```{r, layout="l-screen-inset"}
+DT::datatable(mtcars)
+```
+## Asides
+
+Here's a plot in line.
+```{r}
+ggplot(mtcars, aes(hp, mpg)) + geom_point() 
+```
+
+
+
+<aside>
+
+Here's a plot hanging out on the side
+```{r}
+g <- ggplot(mtcars, aes(hp, mpg)) + geom_point() + geom_smooth()
+ggplotly(g)
+```
+</aside>
+
+
+Another plot in line.
+```{r}
+ggplot(mtcars, aes(hp, mpg)) + geom_point() + geom_line()
+```
+Done with asides.
