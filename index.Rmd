@@ -78,19 +78,26 @@ subplot(dots, boxs, titleX = TRUE, titleY = TRUE) %>%
 ```
 
 ## Tables
+
 ### Paged Table
+
 Making a table: 
+
 ```{r, layout="l-body-outset"}
 library(rmarkdown)
 paged_table(mtcars, options = list(rows.print = 15))
 ```
+
 ### Data table
+
 ```{r, layout="l-screen-inset"}
 DT::datatable(mtcars)
 ```
+
 ## Asides
 
 Here's a plot in line.
+
 ```{r}
 ggplot(mtcars, aes(hp, mpg)) + geom_point() 
 ```
@@ -100,6 +107,7 @@ ggplot(mtcars, aes(hp, mpg)) + geom_point()
 <aside>
 
 Here's a plot hanging out on the side
+
 ```{r}
 g <- ggplot(mtcars, aes(hp, mpg)) + geom_point() + geom_smooth()
 ggplotly(g)
@@ -108,6 +116,7 @@ ggplotly(g)
 
 
 Another plot in line.
+
 ```{r}
 ggplot(mtcars, aes(hp, mpg)) + geom_point() + geom_line()
 ```
