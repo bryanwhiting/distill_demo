@@ -3,6 +3,7 @@ title: "My Distill Website"
 description: |
   My Distill Website
 output_dir: "docs"
+base_url: bryanwhiting.github.io/distill_demo
 navbar:
   right:
     - text: "Home"
